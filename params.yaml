@@ -15,3 +15,8 @@ train_model:
   silent: 1
   eval_metric: 'rmse'
   objective: 'reg:linear'
+  random_state: 42
+  early_stopping_rounds: 100
+  num_boost_round: 2000
+  verbose_eval: 100
+

@@ -14,7 +14,7 @@ def load_data(input_path):
 def save_data(train,test, output_path):
     Path(output_path).mkdir(parents=True, exist_ok=True)
     train.to_csv(output_path+'/train.csv', index=False)
-    train.to_csv(output_path+'/test.csv', index=False)
+    test.to_csv(output_path+'/test.csv', index=False)
 
 if __name__ == "__main__":
     curr_dir=Path(__file__)
@@ -45,8 +45,11 @@ if __name__ == "__main__":
     feature_names = [f for f in train_data.columns if f not in do_not_use_for_training]
     test_data=test_data[feature_names]
     
+
+    
     feature_names.append('trip_duration')
     train_data=train_data[feature_names]
+  
     
     
     save_data(train_data,test_data,output_path)

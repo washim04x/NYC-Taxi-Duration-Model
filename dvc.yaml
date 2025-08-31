@@ -10,7 +10,7 @@ stages:
       - feature_definiation.min_batch_size
 
   train_model:
-    cmd: python ./src/models/train_model.py .\data\processed
+    cmd: python ./src/models/train_model.py ./data/processed
     deps:
       - src/models/train_model.py
       - data/processed/

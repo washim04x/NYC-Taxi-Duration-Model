@@ -10,8 +10,8 @@ stages:
       nfiles: 3
     - path: src/features/build_features.py
       hash: md5
-      md5: aab1de40e33f6831f5df78c1ad900c9f
-      size: 1942
+      md5: 2bdd61e71ecd0c9e000676db205ada2e
+      size: 1953
     - path: src/features/feature_definiation.py
       hash: md5
       md5: c07ceba5a56fd0f9be3ea2cc386f0ce3
@@ -21,17 +21,17 @@ stages:
         feature_definiation.min_batch_size: 10000
         feature_definiation.n_clusters: 100
   train_model:
-    cmd: python ./src/models/train_model.py .\data\processed
+    cmd: python ./src/models/train_model.py ./data/processed
     deps:
     - path: data/processed/
       hash: md5
-      md5: e94df806eacf3ea9e4993c42405a1a5f.dir
-      size: 913596634
+      md5: b76f7b3b172e5f1a8b8f27caf28aaedd.dir
+      size: 650057353
       nfiles: 3
     - path: src/models/train_model.py
       hash: md5
-      md5: 2f195fbd6391719ab6c73a943558e8f2
-      size: 2069
+      md5: 309611666e2b033ae938b507248c9eab
+      size: 2214
     params:
       params.yaml:
         train_model.booster: gbtree

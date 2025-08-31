@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from joblib import load
 from pydantic import BaseModel
+import xgboost as xgb
 
 app=FastAPI()
 class Prediction_input(BaseModel):
@@ -31,8 +32,8 @@ class Prediction_input(BaseModel):
     dropoff_cluster: float
 
 
-model_path='models\model.joblib'
-model=load(model_path)
+model_path="models/model.joblib"
+model = load(model_path)
 
 @app.get("/")
 def home():
@@ -66,10 +67,13 @@ def predict(input_data:Prediction_input):
     input_data.pickup_cluster,
     input_data.dropoff_cluster]
 
-    prediction=model.predict([features])[0].item()
+    transformed_feature=xgb.DMatrix([features])
+
+
+    prediction=model.predict([transformed_feature])[0].item()
     return {"prediction": prediction}
 
 
 if __name__=="__main__":
     import uvicorn
-    uvicorn.run(app,host="127.0.0.0",port=8081)
+    uvicorn.run(app,host="127.0.0.1",port=5000)
