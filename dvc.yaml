@@ -1,0 +1,28 @@
+stages:
+  build_featires:
+    cmd: python ./src/features/build_features.py
+    deps:
+      - src/features/build_features.py
+      - src/features/feature_definiation.py
+      - data/raw/
+    params:
+      - feature_definiation.n_clusters
+      - feature_definiation.min_batch_size
+
+  train_model:
+    cmd: python ./src/models/train_model.py .\data\processed
+    deps:
+      - src/models/train_model.py
+      - data/processed/
+    params:
+      - train_model.min_child_weight
+      - train_model.test_size
+      - train_model.eta
+      - train_model.max_depth
+      - train_model.subsample
+      - train_model.lambda
+      - train_model.nthread
+      - train_model.booster
+      - train_model.silent
+      - train_model.eval_metric
+      - train_model.objective

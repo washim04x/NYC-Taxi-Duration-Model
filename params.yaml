@@ -1,0 +1,17 @@
+feature_definiation:
+  n_clusters: 100
+  min_batch_size: 10000
+
+train_model:
+  min_child_weight: 10
+  test_size: 0.2
+  eta: 0.5
+  colsample_bytree: 0.3
+  max_depth: 10
+  subsample: 0.8
+  lambda: 0.8
+  nthread: 4
+  booster : 'gbtree'
+  silent: 1
+  eval_metric: 'rmse'
+  objective: 'reg:linear'

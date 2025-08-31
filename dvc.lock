@@ -1,0 +1,47 @@
+schema: '2.0'
+stages:
+  build_featires:
+    cmd: python ./src/features/build_features.py
+    deps:
+    - path: data/raw/
+      hash: md5
+      md5: 775bd993f722629b752d2bdee167a7a2.dir
+      size: 271383386
+      nfiles: 3
+    - path: src/features/build_features.py
+      hash: md5
+      md5: aab1de40e33f6831f5df78c1ad900c9f
+      size: 1942
+    - path: src/features/feature_definiation.py
+      hash: md5
+      md5: c07ceba5a56fd0f9be3ea2cc386f0ce3
+      size: 9057
+    params:
+      params.yaml:
+        feature_definiation.min_batch_size: 10000
+        feature_definiation.n_clusters: 100
+  train_model:
+    cmd: python ./src/models/train_model.py .\data\processed
+    deps:
+    - path: data/processed/
+      hash: md5
+      md5: e94df806eacf3ea9e4993c42405a1a5f.dir
+      size: 913596634
+      nfiles: 3
+    - path: src/models/train_model.py
+      hash: md5
+      md5: 2f195fbd6391719ab6c73a943558e8f2
+      size: 2069
+    params:
+      params.yaml:
+        train_model.booster: gbtree
+        train_model.eta: 0.5
+        train_model.eval_metric: rmse
+        train_model.lambda: 0.8
+        train_model.max_depth: 10
+        train_model.min_child_weight: 10
+        train_model.nthread: 4
+        train_model.objective: reg:linear
+        train_model.silent: 1
+        train_model.subsample: 0.8
+        train_model.test_size: 0.2
