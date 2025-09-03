@@ -21,7 +21,7 @@ stages:
         feature_definiation.min_batch_size: 10000
         feature_definiation.n_clusters: 100
   train_model:
-    cmd: python ./src/models/train_model.py ./data/processed
+    cmd: python ./src/models/train_model.py ./data/processed  .\dvclive
     deps:
     - path: data/processed/
       hash: md5
@@ -30,8 +30,8 @@ stages:
       nfiles: 3
     - path: src/models/train_model.py
       hash: md5
-      md5: 309611666e2b033ae938b507248c9eab
-      size: 2214
+      md5: cf5b0f2940b62d2b11f692f1933fb456
+      size: 2488
     params:
       params.yaml:
         train_model.booster: gbtree
@@ -45,3 +45,8 @@ stages:
         train_model.silent: 1
         train_model.subsample: 0.8
         train_model.test_size: 0.2
+    outs:
+    - path: dvclive/metrics.json
+      hash: md5
+      md5: 6f25c9e624abcc28f28ea0075b25be1e
+      size: 72

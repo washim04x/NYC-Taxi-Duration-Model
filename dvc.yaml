@@ -10,7 +10,7 @@ stages:
       - feature_definiation.min_batch_size
 
   train_model:
-    cmd: python ./src/models/train_model.py ./data/processed
+    cmd: python ./src/models/train_model.py ./data/processed  .\dvclive
     deps:
       - src/models/train_model.py
       - data/processed/
@@ -26,3 +26,5 @@ stages:
       - train_model.silent
       - train_model.eval_metric
       - train_model.objective
+    metrics:
+      - dvclive/metrics.json

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from joblib import load
 from pydantic import BaseModel
 import xgboost as xgb
+import numpy as np
 
 app=FastAPI()
 class Prediction_input(BaseModel):
@@ -70,8 +71,8 @@ def predict(input_data:Prediction_input):
     transformed_feature=xgb.DMatrix([features])
 
 
-    prediction=model.predict([transformed_feature])[0].item()
-    return {"prediction": prediction}
+    prediction=model.predict(transformed_feature)[0].item()
+    return {"prediction": np.exp(prediction)}
 
 
 if __name__=="__main__":

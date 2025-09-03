@@ -7,9 +7,10 @@ import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import xgboost as xgb
 from sklearn.model_selection import train_test_split
+from dvclive import Live
 
 
-def train_model(train_features,target,params):
+def train_model(train_features,target,params,live):
     Xtr, Xv, ytr, yv = train_test_split(train_features.values,target, test_size=params['test_size'], random_state=params['random_state'])
     dtrain = xgb.DMatrix(Xtr, label=ytr)
     dvalid = xgb.DMatrix(Xv, label=yv)
@@ -21,6 +22,12 @@ def train_model(train_features,target,params):
                 'eval_metric': params['eval_metric'], 'objective': params['objective']}
     model = xgb.train(xgb_pars, dtrain, params['num_boost_round'], watchlist, early_stopping_rounds=params['early_stopping_rounds'],
                   maximize=False,verbose_eval=params['verbose_eval'])
+    # Log best_iteration and best_score as metrics for DVC
+    live.log_metric("best_iteration", model.best_iteration)
+    live.log_metric("best_score", model.best_score)
+
+
+
     return model
 
 
@@ -45,9 +52,12 @@ def main():
     X = train_features.drop(TARGET, axis=1)
     y = np.log(train_features[TARGET].values+1)
    
+    with Live("dvclive",dvcyaml=False ) as live:
+        trained_model = train_model(X, y, params,live)
 
-    trained_model = train_model(X, y, params)
     save_model(trained_model, output_path)
+
+
 
 
     
